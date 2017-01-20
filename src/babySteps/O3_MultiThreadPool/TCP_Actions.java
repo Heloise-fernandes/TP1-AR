@@ -14,7 +14,7 @@ public class TCP_Actions
 	public final static int MAX_BUFF = 1024;
 	
 	//---------------------------------------------------------------------------------------WRITE
-	public static void writeFile(Socket c, Notification not)
+	public static void writeFile(Socket c, Not not)
 	{
 		try 
 		{
@@ -25,7 +25,7 @@ public class TCP_Actions
 	}
 	
 	
-	public static void writeFile(Socket c, Notification not, FileInputStream fis, long size)
+	public static void writeFile(Socket c, Not not, FileInputStream fis, long size)
 	{
 		byte[] buf = new byte[MAX_BUFF];
         
@@ -52,12 +52,12 @@ public class TCP_Actions
 	
 	
 	//---------------------------------------------------------------------------------------READ
-	public static Notification readNotification(Socket c)
+	public static Not readNotification(Socket c)
 	{
 		try 
 		{
 			DataInputStream dis = new DataInputStream(c.getInputStream());
-			return Notification.values()[dis.readInt()];
+			return Not.values()[dis.readInt()];
 			
 		} catch (IOException e) {e.printStackTrace();}
 		return null;
@@ -73,7 +73,7 @@ public class TCP_Actions
 		{
 			DataInputStream dis = new DataInputStream(c.getInputStream());
 			
-			Notification not =  Notification.values()[dis.readInt()];
+			Not not =  Not.values()[dis.readInt()];
 			long size = dis.readLong();
 			
 			System.out.println("Size = "+size);

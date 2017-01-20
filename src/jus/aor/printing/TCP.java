@@ -12,6 +12,9 @@ import java.io.ObjectOutputStream;
 import java.lang.management.ManagementFactory;
 import java.net.Socket;
 
+import babySteps.O1_Sequentiel.Not;
+import babySteps.O1_Sequentiel.Tupple;
+
 /**
  * Classe de service fournissant toutes les interactions (read, write) en mode TCP.
  * @author Morat 
@@ -21,13 +24,13 @@ class TCP{
 	/**
 	 * 
 	 * @param soc the socket
-	 * @param not the notification
+	 * @param queryPrint the notification
 	 * @throws IOException
 	 */
-	static void writeProtocole(Socket soc,  Notification not) throws IOException {
+	static void writeProtocole(Socket soc,  Notification queryPrint) throws IOException {
 	// A COMPLETER
 		DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
-		dos.writeInt(not.ordinal());
+		dos.writeInt(queryPrint.ordinal());
 		
 	}
 	/**
@@ -48,7 +51,7 @@ class TCP{
 	 * @throws IOException
 	 */
 	static void writeJobKey(Socket soc, JobKey key) throws IOException {
-	// A COMPLETER
+	// A COMPLETER TODO
 		
 		
 		byte[] keyM =	key.marshal();
@@ -65,7 +68,7 @@ class TCP{
 	 * @throws IOException
 	 */
 	static JobKey readJobKey(Socket soc) throws IOException {
-	//----------------------------------------------------------------------------- A COMPLETER
+	// A COMPLETER TODO
 		DataInputStream dis = new DataInputStream(soc.getInputStream());
 		
 		int size;
@@ -92,8 +95,22 @@ class TCP{
 	 * @throws IOException
 	 */
 	static void writeData(Socket soc, InputStream fis, int len) throws IOException {
-	//----------------------------------------------------------------------------- A COMPLETER
-		
+	// A COMPLETER
+		byte[] buf = new byte[MAX_LEN_BUFFER];
+        
+        int n = 0;
+		try 
+		{
+			DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
+
+			dos.writeLong(len);
+			System.out.println("Taille : "+len);
+			while ((n = fis.read(buf)) > 0) 
+	        {
+	        	dos.write(buf);
+	        }
+			
+		} catch (IOException e) {e.printStackTrace();}
 	}
 	/**
 	 * 
@@ -102,7 +119,29 @@ class TCP{
 	 * @throws IOException
 	 */
 	static String readData(Socket soc) throws IOException {
-	//----------------------------------------------------------------------------- A COMPLETER
+	// A COMPLETER
+		byte[] buf = new byte[MAX_LEN_BUFFER];
+        
+        int n = 0;
+        String fichier = "";
+		try 
+		{
+			DataInputStream dis = new DataInputStream(soc.getInputStream());
+			
+			long size = dis.readLong();
+			System.out.println("Taille : "+size);
+			
+			while(n < (int)size)
+			{
+				n += dis.read(buf);
+				System.out.println(n);
+				fichier += new String(buf);
+			}
+			
+			return fichier;
+			
+		} catch (IOException e) {e.printStackTrace();}
+		
 		return null;
 	}
 	/**

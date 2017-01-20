@@ -44,9 +44,9 @@ public class Clients
 	public void listenNotification(Socket s)
 	{
 		System.out.println("CLIENT : reception");
-		Notification not = TCP_Actions.readNotification(s);
+		Not not = TCP_Actions.readNotification(s);
 		
-		if(not == Notification.REPLY_PRINT_OK){System.out.println("CLIENT : ok");}
+		if(not == Not.REPLY_PRINT_OK){System.out.println("CLIENT : ok");}
 		else{System.out.println("CLIENT : nope");}
 	}
 	
@@ -55,7 +55,7 @@ public class Clients
 	{
 
         System.out.println("CLIENT : envoie");
-        TCP_Actions.writeFile(s, Notification.QUERY_PRINT, fis, size);
+        TCP_Actions.writeFile(s, Not.QUERY_PRINT, fis, size);
    
 	}
 	

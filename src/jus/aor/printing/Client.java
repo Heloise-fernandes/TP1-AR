@@ -90,11 +90,13 @@ public class Client {
 			TCP.writeProtocole(soc, Notification.QUERY_PRINT);
 			TCP.writeJobKey(soc, new JobKey());
 			log.log(Level.INFO_2,"Client.key = "+jK);
+			TCP.writeData(soc, fis, (int) f.length());
 			
 			ret = TCP.readProtocole(soc);
 			log.log(Level.INFO_2,"Client.res = "+ret);
 			
-			//-------------------------------------------------------------------------- A COMPLETER
+			
+			
 			//attente de la réponse
 			if(ret == Notification.REPLY_PRINT_OK) {
 				log.log(Level.INFO_2,"Client.ok");

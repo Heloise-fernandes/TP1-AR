@@ -49,7 +49,7 @@ public class Serveur {
 		System.out.println("SERVEUR : resultat : "+tupple.getFOS());
 		
 		System.out.println("SERVEUR : envoie");
-		TCP_Actions.writeFile(client, Notification.REPLY_PRINT_OK);
+		TCP_Actions.writeFile(client, Not.REPLY_PRINT_OK);
 	
 	}
 	

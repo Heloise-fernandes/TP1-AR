@@ -54,18 +54,9 @@ public class Server {
 					//accepter connexion
 					soc = this.serverTCPSoc.accept();
 					
-					
-					//lire envoie
-					Notification ret = TCP.readProtocole(soc);
-					JobKey jK = TCP.readJobKey(soc);
-					
-					log.log(Level.INFO_1,"Server.notification = "+ ret);
-					log.log(Level.INFO_1,"Server.key = "+ jK);
-					
-					if(ret == Notification.QUERY_PRINT)
-					{
-						TCP.writeProtocole(soc, Notification.REPLY_PRINT_OK);
-					}
+					Esclave e = new Esclave(soc, log);
+					e.start();
+
 					
 				}catch(SocketException e){
 						// socket has been closed, master serverTCP will stop.
@@ -94,7 +85,7 @@ public class Server {
 	 * 
 	 */
 	void start(){
-		//---------------------------------------------------------------------- A COMPLETER
+		// A COMPLETER
 		this.alive = true;
 		Thread t = new Thread(new Runnable() {
 			
@@ -113,7 +104,7 @@ public class Server {
 	 * 
 	 */
 	public void stop(){
-		//---------------------------------------------------------------------- A COMPLETER
+		//A COMPLETER
 		this.alive = false;
 	}
 	/**

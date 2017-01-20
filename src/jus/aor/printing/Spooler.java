@@ -34,6 +34,7 @@ public class Spooler extends Thread {
 	protected SpoolerGUI GUI=null;
 	/** le logger du spooler */
 	protected Logger log = Logger.getLogger("Jus.Aor.Printing.Spooler","jus.aor.printing.Spooler");
+	
 	/**
 	 * La création du spooler
 	 * @param port le port de communication avec le spooler
