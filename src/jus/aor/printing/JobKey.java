@@ -37,11 +37,10 @@ public class JobKey {
 	 */
 	public JobKey(byte[] marshal) {
 		String s = new String(marshal);
-		System.out.println(s);
 		String[] valeur = s.split("¤");
 		
 		this.serverId = valeur[0];
-		this.date = Long.getLong(valeur[1]);	
+		this.date = Long.parseLong(valeur[1]);	
 	}
 	/**
 	 * restitue le tableau de bytes de la forme textuelle.

@@ -50,11 +50,13 @@ class TCP{
 	static void writeJobKey(Socket soc, JobKey key) throws IOException {
 	// A COMPLETER
 		
-		int size = key.marshal().length;
-				
+		
+		byte[] keyM =	key.marshal();
+		int size = keyM.length;
+		System.out.println("Clé : "+keyM.toString());
 		DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
 		dos.writeInt(size);
-		dos.write(key.marshal());
+		dos.write(keyM);
 	}
 	/**
 	 * 
@@ -68,11 +70,16 @@ class TCP{
 		
 		int size;
 		size = dis.readInt();
+		
 		byte[] key = new byte[size];
+		int i = 0;
 		
-		dis.read(key);
-		
-		
+		while(i<size)
+		{
+			key[i] = dis.readByte();
+			i++;
+		}
+		System.out.println("Clé : "+key.toString());
 		JobKey jK = new JobKey(key);
 		return jK;
 		

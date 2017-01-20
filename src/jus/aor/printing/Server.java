@@ -57,9 +57,11 @@ public class Server {
 					
 					//lire envoie
 					Notification ret = TCP.readProtocole(soc);
-					log.log(Level.INFO_1,"Server.notification = "+ ret);
 					JobKey jK = TCP.readJobKey(soc);
+					
+					log.log(Level.INFO_1,"Server.notification = "+ ret);
 					log.log(Level.INFO_1,"Server.key = "+ jK);
+					
 					if(ret == Notification.QUERY_PRINT)
 					{
 						TCP.writeProtocole(soc, Notification.REPLY_PRINT_OK);
