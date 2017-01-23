@@ -119,8 +119,11 @@ public class Client {
 	 * @param n nombre de requêtes d'impression à faire
 	 */
 	public void queryPrint(final File f,int n) {
-		//-------------------------------------------------------------------------- A COMPLETER
-		this.onePrint(f);
+		int i = 0;
+		while(i < n)
+		{
+			this.onePrint(f);
+		}
 		
 		
 	}
