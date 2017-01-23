@@ -54,9 +54,20 @@ public class Server {
 					//accepter connexion
 					soc = this.serverTCPSoc.accept();
 					
+					//=========================>Objectif 1
+					
+					Notification ret = TCP.readProtocole(soc);
+					JobKey jK = TCP.readJobKey(soc);
+					String file = TCP.readData(soc);
+					
+					log.log(Level.INFO_1,"Server.notification = "+ ret);
+					log.log(Level.INFO_1,"Server.key = "+ jK);
+					log.log(Level.INFO_1,"Server.data = "+file);
+					
+					//=========================>Objectif 2
 					Esclave e = new Esclave(soc, log);
 					e.start();
-
+						
 					
 				}catch(SocketException e){
 						// socket has been closed, master serverTCP will stop.
