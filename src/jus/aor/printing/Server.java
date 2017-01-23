@@ -47,6 +47,9 @@ public class Server {
 			Notification protocole=null;
 			log.log(Level.INFO_1,"Server.TCP.Started",new Object[] {port,backlog});
 			
+			Spooler s = new Spooler(3300);
+			
+			
 			while(alive) 
 			{
 				log.log(Level.INFO_1,"Server.TCP.Waiting");
@@ -56,7 +59,7 @@ public class Server {
 					
 					//=========================>Objectif 1
 					
-					Notification ret = TCP.readProtocole(soc);
+					/*Notification ret = TCP.readProtocole(soc);
 					JobKey jK = TCP.readJobKey(soc);
 					String file = TCP.readData(soc);
 					
@@ -64,8 +67,14 @@ public class Server {
 					log.log(Level.INFO_1,"Server.key = "+ jK);
 					log.log(Level.INFO_1,"Server.data = "+file);
 					
+					if(ret == Notification.QUERY_PRINT)
+					{
+							TCP.writeProtocole(soc, Notification.REPLY_PRINT_OK);
+							TCP.writeJobKey(soc, jK);
+					}*/
+					
 					//=========================>Objectif 2
-					Esclave e = new Esclave(soc, log);
+					Esclave e = new Esclave(soc, s);
 					e.start();
 						
 					
