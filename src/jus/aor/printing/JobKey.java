@@ -37,7 +37,7 @@ public class JobKey {
 	 */
 	public JobKey(byte[] marshal) {
 		String s = new String(marshal);
-		String[] valeur = s.split("�");
+		String[] valeur = s.split("¤");
 		
 		this.serverId = valeur[0];
 		this.date = Long.parseLong(valeur[1]);	
@@ -53,7 +53,7 @@ public class JobKey {
 	 * la forme textuelle : "<<b>serverId</b>>¤<<b>date</b>>"
 	 * où <<b>X</b>> est la repésentation textuelle de l'attribut correspondant
 	 */
-	public String toString() { return (serverId+"�"+date);}
+	public String toString() { return (serverId+"¤"+date);}
 	/**
 	 * L'équivalence de 2 JobKey, si jobId est vide il n'est pas pris en compte,
 	 * si date est 0 elle n'est pas prise en compte.
