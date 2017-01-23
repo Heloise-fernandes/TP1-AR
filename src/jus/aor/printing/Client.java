@@ -91,8 +91,10 @@ public class Client {
 			TCP.writeProtocole(soc, Notification.QUERY_PRINT);
 			TCP.writeJobKey(soc, jK);
 			log.log(Level.INFO_2,"Client.key = "+jK);
+			
 			TCP.writeData(soc, fis, (int) f.length());
 			ret = TCP.readProtocole(soc);
+			
 			log.log(Level.INFO_2,"Client.res = "+ret);
 			
 			JobKey jKR = TCP.readJobKey(soc);
