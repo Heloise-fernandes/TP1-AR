@@ -120,12 +120,10 @@ public class Client {
 	 */
 	public void queryPrint(final File f,int n) {
 		int i = 0;
-		while(i < n)
-		{
+		//while(i < n)
+		//{
 			this.onePrint(f);
-		}
-		
-		
+		//}
 	}
 	/**
 	 * protocole du server status

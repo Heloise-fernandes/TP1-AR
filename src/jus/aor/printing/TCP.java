@@ -79,8 +79,7 @@ class TCP{
 		
 		while(i<size)
 		{
-			key[i] = dis.readByte();
-			i++;
+			i += dis.read(key,i,size-i);
 		}
 		System.out.println("Clé : "+key.toString());
 		JobKey jK = new JobKey(key);
@@ -104,7 +103,6 @@ class TCP{
 			DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
 
 			dos.writeLong(len);
-			System.out.println("Taille : "+len);
 			while ((n = fis.read(buf)) > 0) 
 	        {
 	        	dos.write(buf);
@@ -129,12 +127,10 @@ class TCP{
 			DataInputStream dis = new DataInputStream(soc.getInputStream());
 			
 			long size = dis.readLong();
-			System.out.println("Taille : "+size);
 			
 			while(n < (int)size)
 			{
 				n += dis.read(buf);
-				System.out.println(n);
 				fichier += new String(buf);
 			}
 			
