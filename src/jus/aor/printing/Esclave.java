@@ -29,6 +29,7 @@ public class Esclave extends Thread {
 				if(ret == Notification.QUERY_PRINT)
 				{
 						TCP.writeProtocole(soc, Notification.REPLY_PRINT_OK);
+						TCP.writeJobKey(soc, jK);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
