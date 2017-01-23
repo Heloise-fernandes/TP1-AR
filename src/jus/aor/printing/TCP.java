@@ -55,6 +55,7 @@ class TCP{
 		
 		
 		byte[] keyM =	key.marshal();
+		//byte[] keyM =	"hello".getBytes();
 		int size = keyM.length;
 		System.out.println("Clé : "+keyM.toString());
 		DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
@@ -82,6 +83,7 @@ class TCP{
 			i += dis.read(key,i,size-i);
 		}
 		System.out.println("Clé : "+key.toString());
+		System.out.println("Clé : "+new String(key));
 		JobKey jK = new JobKey(key);
 		return jK;
 		
