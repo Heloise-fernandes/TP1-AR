@@ -87,13 +87,19 @@ public class Client {
 			soc = new Socket(this.host, this.port);
 			JobKey jK = new JobKey();
 			
+			
 			TCP.writeProtocole(soc, Notification.QUERY_PRINT);
-			TCP.writeJobKey(soc, new JobKey());
+			TCP.writeJobKey(soc, jK);
 			log.log(Level.INFO_2,"Client.key = "+jK);
 			TCP.writeData(soc, fis, (int) f.length());
-			
 			ret = TCP.readProtocole(soc);
 			log.log(Level.INFO_2,"Client.res = "+ret);
+			
+			JobKey jKR = TCP.readJobKey(soc);
+			
+			if (!jK.equals(jKR)) {
+				log.log(Level.INFO_2,"Client.JobKey.Failed",jKR.toString());
+			}
 			
 			
 			
