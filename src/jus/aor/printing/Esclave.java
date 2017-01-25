@@ -9,6 +9,16 @@ public class Esclave extends Thread {
 	private Socket soc;
 	private Logger log;
 	private Spooler spooler;
+	private boolean occupe = false;
+	
+	
+	public Esclave(Spooler s)
+	{
+		this.soc = null;
+		this.log = Logger.getLogger("Jus.Aor.Printing.Esclave","jus.aor.printing.Esclave");
+		this.log.setLevel(Level.INFO_2);
+		this.spooler = s;
+	}
 	
 	public Esclave(Socket p, Spooler s)
 	{
@@ -17,8 +27,13 @@ public class Esclave extends Thread {
 		this.log.setLevel(Level.INFO_2);
 		this.spooler = s;
 	}
+	
+	public void setSocket(Socket soc){
+		this.soc = soc;
+	}
 	@Override
 	public void run() {
+		this.estOccupe();
 		try {
 			try {
 				Notification ret = TCP.readProtocole(soc);
@@ -29,6 +44,7 @@ public class Esclave extends Thread {
 				log.log(Level.INFO_1,"Server.key = "+ jK);
 				
 				this.spooler.add(new JobPrint(jK, file));
+				
 				
 				if(ret == Notification.QUERY_PRINT)
 				{
@@ -49,6 +65,20 @@ public class Esclave extends Thread {
 			e.printStackTrace();
 			System.exit(-1);
 		}
+		this.nEstPlusOccupe();
+	}
+	
+	private synchronized void estOccupe(){
+		this.occupe = true;
+	}
+	
+	private synchronized void nEstPlusOccupe(){
+		this.occupe = false;
+	}
+	
+	public synchronized boolean work()
+	{
+		return this.occupe;
 	}
 
 }

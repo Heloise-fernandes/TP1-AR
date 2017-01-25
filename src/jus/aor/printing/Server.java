@@ -1,15 +1,12 @@
 package jus.aor.printing;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.Thread.State;
+
 import java.net.*;
 import java.util.*;
 import java.util.logging.Logger;
 
 //import jus.aor.printing.Esclave.Slave;
-import jus.util.Formule;
+
 /**
  * Représentation du serveur d'impression.
  * @author Morat
@@ -30,11 +27,16 @@ public class Server {
 	protected ServerSocket serverTCPSoc;
 	/** le logger du server */
 	Logger log = Logger.getLogger("Jus.Aor.Printing.Server","jus.aor.printing.Server");
+	
+	protected ArrayList<Esclave> spooler = new ArrayList<Esclave>();
+	
 	/**
 	 * Construction du server d'impression
 	 */
 	public Server() {
 		log.setLevel(Level.INFO_1);
+		
+		
 	}
 	/**
 	 * le master thread TCP.
@@ -49,6 +51,9 @@ public class Server {
 			
 			Spooler s = new Spooler(3300);
 			
+			for(int i =1; i<=poolSize; i++){
+				spooler.add(new Esclave(s));
+			}
 			
 			while(alive) 
 			{
@@ -74,9 +79,21 @@ public class Server {
 					}*/
 					
 					//=========================>Objectif 2
-					Esclave e = new Esclave(soc, s);
-					e.start();
-						
+					
+					Esclave e = null;
+					for (Esclave esclave : spooler) {
+						if(!esclave.work()){
+							e = esclave;
+							e.setSocket(soc);
+							e.start();
+							break;
+						}
+					}
+					if (e==null){
+						//Normalement c'est juste qu'il n'y a plus de place...
+						TCP.writeProtocole(soc,Notification.REPLY_UNKNOWN_ERROR);
+					}
+					
 					
 				}catch(SocketException e){
 						// socket has been closed, master serverTCP will stop.
