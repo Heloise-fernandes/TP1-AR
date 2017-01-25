@@ -35,6 +35,9 @@ public class Spooler extends Thread {
 	/** le logger du spooler */
 	protected Logger log = Logger.getLogger("Jus.Aor.Printing.Spooler","jus.aor.printing.Spooler");
 	
+	protected Formule impressionTimeOfSize;
+	
+	protected ServerSocket serveurTCP;
 	/**
 	 * La création du spooler
 	 * @param port le port de communication avec le spooler
@@ -44,7 +47,8 @@ public class Spooler extends Thread {
 		// création du GUI
 		GUI=new SpoolerGUI(this);
 		this.port=port;
-		//----------------------------------------------------------------------------- A COMPLETER
+		
+		this.spool = new LinkedList<JobPrint>();
 	}
 	/**  
 	 * fixe la durée d'impression d'un job en fonction de sa taille et d'un minimum de 100 unités.
@@ -57,16 +61,24 @@ public class Spooler extends Thread {
 	 * sur l'imprimante.
 	 */
 	public void run() {		
-		JobPrint file=null;
-		while(alive || spool.size()>0){
-			//----------------------------------------------------------------------------- A COMPLETER
-		}
-		log.log(Level.INFO_1,"Spooler.Terminated");
-		GUI.dispose();
 		try{
+			JobPrint file=null;
+			while(alive || spool.size()>0){
+				//A COMPLETER
+				file = this.spool.poll();
+				sleep(this.delay());
+				
+			}
+			log.log(Level.INFO_1,"Spooler.Terminated");
+			GUI.dispose();
+			
 			//----------------------------------------------------------------------------- A COMPLETER
-		}catch(IOException e){
-			log.log(Level.SEVERE,e.getMessage());
+		}//catch(IOException e){
+		//	log.log(Level.SEVERE,e.getMessage());
+		//}
+		catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	/**
@@ -74,7 +86,8 @@ public class Spooler extends Thread {
 	 * @param file le fichier à insérer dans le spooler.
 	 */
 	public synchronized void add(JobPrint file) {
-		//----------------------------------------------------------------------------- A COMPLETER
+		// A COMPLETER
+		((LinkedList<JobPrint>)this.spool).addLast(file);
 	}
 	/**
 	 * renvoie le nombre de jobs en attente
@@ -98,5 +111,5 @@ public class Spooler extends Thread {
 	 * fixe la forumule de calcul du temps d'impression
 	 * @param f la forumule de calcul du temps d'impression
 	 */
-	public void impressionTimeOfSize(Formule f) {impressionTimeOfSize =f;}
+	public void impressionTimeOfSize(Formule f) {impressionTimeOfSize = f;}
 }

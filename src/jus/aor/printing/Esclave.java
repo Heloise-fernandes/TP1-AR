@@ -8,11 +8,14 @@ public class Esclave extends Thread {
 
 	private Socket soc;
 	private Logger log;
-	public Esclave(Socket p,Logger l)
+	private Spooler spooler;
+	
+	public Esclave(Socket p, Spooler s)
 	{
 		this.soc = p;
-		this.log = l;
-		
+		this.log = Logger.getLogger("Jus.Aor.Printing.Esclave","jus.aor.printing.Esclave");
+		this.log.setLevel(Level.INFO_2);
+		this.spooler = s;
 	}
 	@Override
 	public void run() {
@@ -24,13 +27,15 @@ public class Esclave extends Thread {
 				
 				log.log(Level.INFO_1,"Server.notification = "+ ret);
 				log.log(Level.INFO_1,"Server.key = "+ jK);
-				log.log(Level.INFO_1,"Server.data = "+file);
+				
+				this.spooler.add(new JobPrint(jK, file));
 				
 				if(ret == Notification.QUERY_PRINT)
 				{
 						TCP.writeProtocole(soc, Notification.REPLY_PRINT_OK);
 						TCP.writeJobKey(soc, jK);
 				}
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
