@@ -79,8 +79,17 @@ public class Server {
 					}*/
 					
 					//=========================>Objectif 2
+					/*Esclave e = new Esclave(soc, s);
+ 					e.start();
+					*/
 					
-					Esclave e = null;
+					//=========================>Objectif 3
+					Esclave e = new Esclave(soc, s);
+ 					e.start();
+					
+					//=========================>Objectif 4
+					// Ne fonctionne pas
+					/*Esclave e = null;
 					for (Esclave esclave : spooler) {
 						if(!esclave.work()){
 							e = esclave;
@@ -92,7 +101,7 @@ public class Server {
 					if (e==null){
 						//Normalement c'est juste qu'il n'y a plus de place...
 						TCP.writeProtocole(soc,Notification.REPLY_UNKNOWN_ERROR);
-					}
+					}*/
 					
 					
 				}catch(SocketException e){

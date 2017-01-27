@@ -11,20 +11,20 @@ public class Esclave extends Thread {
 	private Spooler spooler;
 	private boolean occupe = false;
 	
-	
+	//Pour Obj 4
 	public Esclave(Spooler s)
 	{
 		this.soc = null;
-		this.log = Logger.getLogger("Jus.Aor.Printing.Esclave","jus.aor.printing.Esclave");
-		this.log.setLevel(Level.INFO_2);
+		//this.log = Logger.getLogger("Jus.Aor.Printing.Esclave","jus.aor.printing.Esclave");
+		//this.log.setLevel(Level.INFO_2);
 		this.spooler = s;
 	}
 	
 	public Esclave(Socket p, Spooler s)
 	{
 		this.soc = p;
-		this.log = Logger.getLogger("Jus.Aor.Printing.Esclave","jus.aor.printing.Esclave");
-		this.log.setLevel(Level.INFO_2);
+		//this.log = Logger.getLogger("Jus.Aor.Printing.Esclave","jus.aor.printing.Esclave");
+		//this.log.setLevel(Level.INFO_2);
 		this.spooler = s;
 	}
 	
@@ -40,8 +40,8 @@ public class Esclave extends Thread {
 				JobKey jK = TCP.readJobKey(soc);
 				String file = TCP.readData(soc);
 				
-				log.log(Level.INFO_1,"Server.notification = "+ ret);
-				log.log(Level.INFO_1,"Server.key = "+ jK);
+				//log.log(Level.INFO_1,"Server.notification = "+ ret);
+				//log.log(Level.INFO_1,"Server.key = "+ jK);
 				
 				this.spooler.add(new JobPrint(jK, file));
 				

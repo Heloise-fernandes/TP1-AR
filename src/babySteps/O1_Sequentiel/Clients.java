@@ -38,7 +38,7 @@ public class Clients
 			
 		} catch (IOException e) {e.printStackTrace();}
 		
-	}
+	} 
 	
 	
 	public void listenNotification(Socket s)
